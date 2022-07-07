@@ -15,13 +15,13 @@ import React, { Fragment, useState } from "react";
 import { getMatchDetail } from "../API/Api";
 
 const MyCard = ({ match }) => {
-  const [detail, setDetail] = useState({});
+  const [data, setDetail] = useState({});
   const [open, setOpen] = useState(false);
-  const handleClick = (id) => {
-    getMatchDetail(id)
-      .then((data) => {
-        console.log("Match Detail", data);
-        setDetail(data);
+  const handleClick = () => {
+    getMatchDetail()
+      .then((d) => {
+        console.log("Match Detail", d);
+        setDetail(d);
         handleOpen();
       })
       .catch((error) => console.log(error));
@@ -41,7 +41,7 @@ const MyCard = ({ match }) => {
         <CardContent>
           <Grid container justify="center" alignItems="center" spacing={4}>
             <Grid item>
-              <Typography variant="h5">{match["team-1"]}</Typography>
+              <Typography variant="h5">{match.teams[0]}</Typography>
             </Grid>
             <Grid item>
               <img
@@ -51,7 +51,7 @@ const MyCard = ({ match }) => {
               />
             </Grid>
             <Grid item>
-              <Typography variant="h5">{match["team-2"]}</Typography>
+              <Typography variant="h5">{match.teams[1]}</Typography>
             </Grid>
           </Grid>
         </CardContent>
@@ -86,17 +86,12 @@ const MyCard = ({ match }) => {
       <DialogTitle id="alert-dialog-title">{"Match Details..."}</DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          <Typography>{detail.stat}</Typography>
-          <Typography>
-            Match:
-            <span style={{ fontStyle: "oblique", fontWeight: "bold" }}>
-              {detail.matchStarted ? "Started" : "Still not started"}
-            </span>
-          </Typography>
+          <Typography>{match.status}</Typography>
+
           <Typography>
             Score:
             <span style={{ fontStyle: "oblique", fontWeight: "bold" }}>
-              {detail.score}
+              {data.score}
             </span>
           </Typography>
         </DialogContentText>

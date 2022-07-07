@@ -7,12 +7,12 @@ import MyCard from "./components/MyCard";
 import { getMatches } from "./API/Api";
 
 function App() {
-  const [matches, setMatches] = useState([]);
+  const [data, setMatches] = useState([]);
   useEffect(() => {
     getMatches()
-      .then((data) => {
-        setMatches(data.matches);
-        console.log(data.matches);
+      .then((d) => {
+        setMatches(d.data);
+        console.log(d.matches);
       })
       .catch((error) => {});
   }, []);
@@ -28,9 +28,9 @@ function App() {
       <Grid container>
         <Grid sm="2"></Grid>
         <Grid sm="8">
-          {matches.map((match) => (
-            <Fragment key={match.unique_id}>
-              {match.type == "Twenty20" ? <MyCard match={match} /> : ""}
+          {data.map((match) => (
+            <Fragment key={match.id}>
+              {match.matchType === "t20" ? <MyCard match={match} /> : ""}
             </Fragment>
           ))}
         </Grid>
